@@ -6,7 +6,7 @@ The default smoke test does not call Anthropic APIs. It checks `claude --version
 
 ## Files
 
-- `Dockerfile` builds a Cube-ready image with Node.js, npm, Git, ripgrep, and pinned `@anthropic-ai/claude-code`.
+- `Dockerfile` builds a Cube-ready image with Node.js, npm, Git, ripgrep, pinned `@anthropic-ai/claude-code`, and a non-root `cubesandbox` user.
 - `build_template.sh` builds the image and registers it as a CubeSandbox template.
 - `run_claude_code.py` starts the sandbox, injects optional Claude credentials, and verifies snapshot restore.
 - `env.example` documents the local environment variables.
@@ -87,7 +87,7 @@ If you use an Anthropic-compatible gateway, also add its host to `allow_out` or 
 
 ## Interactive usage
 
-For an interactive coding session, create a sandbox with the same template and attach through your orchestration layer or envd process API. Keep project files under `/workspace`; this example snapshots that path and restores it by using the snapshot ID as the next `template`.
+For an interactive coding session, create a sandbox with the same template and attach through your orchestration layer or envd process API. Keep project files under `/workspace`; this example snapshots that path and restores it by using the snapshot ID as the next `template`. The image runs as the non-root `cubesandbox` user, and `/workspace` is writable by that user.
 
 ## Troubleshooting
 

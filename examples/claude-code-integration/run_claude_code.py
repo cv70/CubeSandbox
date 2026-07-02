@@ -42,7 +42,8 @@ def main() -> None:
 
     if os.environ.get("RUN_CLAUDE_PROMPT") == "1":
         if not env_vars.get("ANTHROPIC_API_KEY") and not env_vars.get("ANTHROPIC_AUTH_TOKEN"):
-            raise RuntimeError("RUN_CLAUDE_PROMPT=1 requires ANTHROPIC_API_KEY or ANTHROPIC_AUTH_TOKEN")
+            sys.stderr.write("RUN_CLAUDE_PROMPT=1 requires ANTHROPIC_API_KEY or ANTHROPIC_AUTH_TOKEN\n")
+            sys.exit(2)
 
     network = None
     allow_internet_access = True
@@ -103,9 +104,8 @@ def main() -> None:
             print(f"restored sandbox: {restored.sandbox_id}")
             print("restored file:", run_checked(restored, "python3 hello.py"))
     finally:
-        if snapshot_id:
-            Sandbox.delete_snapshot(snapshot_id)
-            print("snapshot deleted")
+        Sandbox.delete_snapshot(snapshot_id)
+        print("snapshot deleted")
 
 
 if __name__ == "__main__":

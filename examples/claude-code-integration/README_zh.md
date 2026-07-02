@@ -6,7 +6,7 @@
 
 ## 文件说明
 
-- `Dockerfile` 构建包含 Node.js、npm、Git、ripgrep 和固定版本 `@anthropic-ai/claude-code` 的 Cube 镜像。
+- `Dockerfile` 构建包含 Node.js、npm、Git、ripgrep、固定版本 `@anthropic-ai/claude-code` 和非 root `cubesandbox` 用户的 Cube 镜像。
 - `build_template.sh` 构建镜像并注册为 CubeSandbox 模板。
 - `run_claude_code.py` 启动沙箱、可选注入 Claude 凭证，并验证快照恢复。
 - `env.example` 记录本地环境变量。
@@ -87,7 +87,7 @@ STRICT_EGRESS=1 python3 run_claude_code.py
 
 ## 交互式使用
 
-交互式编码会话可以使用相同模板创建沙箱，并通过你的编排层或 envd process API 进入。建议把项目文件放在 `/workspace`；本示例会快照该路径，并把快照 ID 作为下一次 `template` 来恢复状态。
+交互式编码会话可以使用相同模板创建沙箱，并通过你的编排层或 envd process API 进入。建议把项目文件放在 `/workspace`；本示例会快照该路径，并把快照 ID 作为下一次 `template` 来恢复状态。镜像默认以非 root `cubesandbox` 用户运行，且 `/workspace` 对该用户可写。
 
 ## 常见问题
 

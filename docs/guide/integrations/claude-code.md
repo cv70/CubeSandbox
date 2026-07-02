@@ -20,6 +20,7 @@ The runnable example is under `examples/claude-code-integration/`.
 - Target: Claude Code, Anthropic's terminal coding agent.
 - Tested installation path: `npm install -g @anthropic-ai/claude-code@2.1.198`.
 - Runtime: Node.js, npm, Git, ripgrep, and a Cube base image with envd on port `49983`.
+- Default user: non-root `cubesandbox`, with `/workspace` writable by that user.
 - CubeSandbox API: E2B-compatible Python SDK path via `cubesandbox`.
 
 Claude Code is an interactive CLI. The example keeps the default validation non-interactive: it verifies `claude --version`, prepares a Git workspace, snapshots the sandbox, restores from that snapshot, and optionally runs a real Claude prompt when `RUN_CLAUDE_PROMPT=1` is set.
@@ -152,6 +153,8 @@ Use CubeSandbox snapshots to preserve Claude Code state across sessions:
 2. Keep source code, `.git`, task notes, and generated artifacts under `/workspace`.
 3. Call `sandbox.create_snapshot()` after a useful checkpoint.
 4. Resume later with `Sandbox.create(template=snapshot_id)`.
+
+The example image runs as the non-root `cubesandbox` user. If your orchestrator overrides the process user, keep `/workspace` ownership aligned with that user.
 
 The example uses this flow:
 

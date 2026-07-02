@@ -21,7 +21,6 @@ RUN apt-get update \
         git \
         gnupg \
         jq \
-        openssh-client \
         python3 \
         ripgrep \
     && mkdir -p /etc/apt/keyrings \
@@ -41,15 +40,20 @@ RUN apt-get update \
     && rm -f /tmp/nodesource.gpg.key \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /workspace /root/.claude \
+RUN useradd --create-home --shell /bin/bash cubesandbox \
+    && mkdir -p /workspace /home/cubesandbox/.claude \
+    && chown -R cubesandbox:cubesandbox /workspace /home/cubesandbox/.claude \
     && printf '%s\n' \
         '# CubeSandbox Claude Code workspace' \
         '' \
         'This workspace is intentionally created inside the sandbox image.' \
     > /workspace/README.md
+RUN chown cubesandbox:cubesandbox /workspace/README.md
 
 WORKDIR /workspace
 
 EXPOSE 49983
+
+USER cubesandbox
 
 CMD ["sleep", "infinity"]

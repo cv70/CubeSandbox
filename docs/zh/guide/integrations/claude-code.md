@@ -20,6 +20,7 @@ lang: zh-CN
 - 集成对象：Claude Code，Anthropic 的终端编码 Agent。
 - 安装方式：`npm install -g @anthropic-ai/claude-code@2.1.198`。
 - 运行环境：Node.js、npm、Git、ripgrep，以及在 `49983` 端口运行 envd 的 Cube base image。
+- 默认用户：非 root `cubesandbox`，并且 `/workspace` 对该用户可写。
 - CubeSandbox API：通过 `cubesandbox` 使用 E2B 兼容的 Python SDK 路径。
 
 Claude Code 是交互式 CLI。示例默认采用非交互验证：检查 `claude --version`，准备 Git 工作区，创建沙箱快照，从快照恢复，并在设置 `RUN_CLAUDE_PROMPT=1` 时可选执行真实 Claude prompt。
@@ -152,6 +153,8 @@ Sandbox.create(
 2. 将源码、`.git`、任务笔记和生成产物保存在 `/workspace`。
 3. 在合适检查点调用 `sandbox.create_snapshot()`。
 4. 后续用 `Sandbox.create(template=snapshot_id)` 恢复。
+
+示例镜像默认以非 root `cubesandbox` 用户运行。如果你的编排层覆盖了进程用户，请确保 `/workspace` 的属主与运行用户一致。
 
 示例使用如下流程：
 
