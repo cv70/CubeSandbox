@@ -18,7 +18,7 @@ The runnable example is under `examples/claude-code-integration/`.
 ## Integration Target and Version
 
 - Target: Claude Code, Anthropic's terminal coding agent.
-- Tested installation path: `npm install -g @anthropic-ai/claude-code`.
+- Tested installation path: `npm install -g @anthropic-ai/claude-code@2.1.198`.
 - Runtime: Node.js, npm, Git, ripgrep, and a Cube base image with envd on port `49983`.
 - CubeSandbox API: E2B-compatible Python SDK path via `cubesandbox`.
 
@@ -79,6 +79,7 @@ For direct Claude Code calls, add:
 
 ```bash
 ANTHROPIC_API_KEY=sk-ant-...
+# ANTHROPIC_AUTH_TOKEN=...
 ANTHROPIC_BASE_URL=https://api.anthropic.com
 ```
 
@@ -134,10 +135,8 @@ Sandbox.create(
             "api.anthropic.com",
             "console.anthropic.com",
             "registry.npmjs.org",
-            "*.npmjs.org",
-            "*.npmjs.com",
             "github.com",
-            "*.githubusercontent.com",
+            "raw.githubusercontent.com",
         ],
     },
 )
@@ -175,7 +174,8 @@ For shorter gaps, `sandbox.pause()` and `Sandbox.connect(sandbox_id)` can keep a
 
 ## Caveats
 
-- Claude Code may change CLI flags over time. Keep the template rebuildable and pin `@anthropic-ai/claude-code` to a known version if reproducibility matters.
+- Claude Code may change CLI flags over time. The example pins `@anthropic-ai/claude-code` through the `CLAUDE_CODE_VERSION` Docker build argument; update it intentionally when validating a new CLI release.
+- The Dockerfile verifies the NodeSource signing key fingerprint before adding the Node.js apt repository. If NodeSource rotates the key, update `NODESOURCE_KEY_FINGERPRINT` after checking the new key out of band.
 - Interactive terminal UX depends on your orchestrator. The example uses non-interactive process calls because they are easier to validate in CI and local deployments.
 - Domain allowlists rely on DNS learning. When using `allow_out` with domains, keep `allow_internet_access=False` or include a deny-all fallback so unmatched public traffic is not allowed by default.
 - Secrets injected as environment variables are visible inside the sandbox. Prefer CubeEgress injection for shared infrastructure.

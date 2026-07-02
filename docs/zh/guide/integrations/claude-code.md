@@ -18,7 +18,7 @@ lang: zh-CN
 ## 集成对象与版本
 
 - 集成对象：Claude Code，Anthropic 的终端编码 Agent。
-- 安装方式：`npm install -g @anthropic-ai/claude-code`。
+- 安装方式：`npm install -g @anthropic-ai/claude-code@2.1.198`。
 - 运行环境：Node.js、npm、Git、ripgrep，以及在 `49983` 端口运行 envd 的 Cube base image。
 - CubeSandbox API：通过 `cubesandbox` 使用 E2B 兼容的 Python SDK 路径。
 
@@ -79,6 +79,7 @@ E2B_API_KEY=e2b_000000
 
 ```bash
 ANTHROPIC_API_KEY=sk-ant-...
+# ANTHROPIC_AUTH_TOKEN=...
 ANTHROPIC_BASE_URL=https://api.anthropic.com
 ```
 
@@ -134,10 +135,8 @@ Sandbox.create(
             "api.anthropic.com",
             "console.anthropic.com",
             "registry.npmjs.org",
-            "*.npmjs.org",
-            "*.npmjs.com",
             "github.com",
-            "*.githubusercontent.com",
+            "raw.githubusercontent.com",
         ],
     },
 )
@@ -175,7 +174,8 @@ with Sandbox.create(template=snapshot_id) as restored:
 
 ## 注意事项
 
-- Claude Code CLI 参数可能随版本变化。如果重视可复现性，请在模板中固定 `@anthropic-ai/claude-code` 版本。
+- Claude Code CLI 参数可能随版本变化。示例通过 Docker build 参数 `CLAUDE_CODE_VERSION` 固定 `@anthropic-ai/claude-code` 版本；升级 CLI 时应显式修改并重新验证。
+- Dockerfile 在添加 Node.js apt 源之前会校验 NodeSource 签名 key 的 fingerprint。如果 NodeSource 轮换 key，请先通过独立渠道确认新 key，再更新 `NODESOURCE_KEY_FINGERPRINT`。
 - 交互式终端体验取决于你的编排层。示例使用非交互 process 调用，便于在 CI 和本地部署中验证。
 - 域名白名单依赖 DNS 学习。使用域名 `allow_out` 时，应设置 `allow_internet_access=False` 或提供 deny-all fallback，避免未匹配公网流量默认放行。
 - 以环境变量注入的密钥会对沙箱内进程可见。共享基础设施建议使用 CubeEgress 注入。

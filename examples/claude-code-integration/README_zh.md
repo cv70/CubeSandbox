@@ -6,7 +6,7 @@
 
 ## 文件说明
 
-- `Dockerfile` 构建包含 Node.js、npm、Git、ripgrep 和 `@anthropic-ai/claude-code` 的 Cube 镜像。
+- `Dockerfile` 构建包含 Node.js、npm、Git、ripgrep 和固定版本 `@anthropic-ai/claude-code` 的 Cube 镜像。
 - `build_template.sh` 构建镜像并注册为 CubeSandbox 模板。
 - `run_claude_code.py` 启动沙箱、可选注入 Claude 凭证，并验证快照恢复。
 - `env.example` 记录本地环境变量。
@@ -40,6 +40,7 @@ E2B_API_KEY=e2b_000000
 
 ```bash
 ANTHROPIC_API_KEY=sk-ant-...
+# ANTHROPIC_AUTH_TOKEN=...
 ANTHROPIC_BASE_URL=https://api.anthropic.com
 ```
 
@@ -79,10 +80,8 @@ STRICT_EGRESS=1 python3 run_claude_code.py
 - `api.anthropic.com`
 - `console.anthropic.com`
 - `registry.npmjs.org`
-- `*.npmjs.org`
-- `*.npmjs.com`
 - `github.com`
-- `*.githubusercontent.com`
+- `raw.githubusercontent.com`
 
 如果使用 Anthropic 兼容网关，请把网关域名加入 `allow_out`，或设置 `ANTHROPIC_BASE_URL`。
 

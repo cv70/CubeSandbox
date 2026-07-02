@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -19,3 +20,5 @@ def load_local_dotenv() -> None:
         if path.is_file():
             load_dotenv(dotenv_path=path, override=False)
             return
+
+    sys.stderr.write("Warning: .env not found; using process environment only.\n")

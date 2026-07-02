@@ -6,7 +6,7 @@ The default smoke test does not call Anthropic APIs. It checks `claude --version
 
 ## Files
 
-- `Dockerfile` builds a Cube-ready image with Node.js, npm, Git, ripgrep, and `@anthropic-ai/claude-code`.
+- `Dockerfile` builds a Cube-ready image with Node.js, npm, Git, ripgrep, and pinned `@anthropic-ai/claude-code`.
 - `build_template.sh` builds the image and registers it as a CubeSandbox template.
 - `run_claude_code.py` starts the sandbox, injects optional Claude credentials, and verifies snapshot restore.
 - `env.example` documents the local environment variables.
@@ -40,6 +40,7 @@ Optional Claude values:
 
 ```bash
 ANTHROPIC_API_KEY=sk-ant-...
+# ANTHROPIC_AUTH_TOKEN=...
 ANTHROPIC_BASE_URL=https://api.anthropic.com
 ```
 
@@ -79,10 +80,8 @@ The script allows these domains:
 - `api.anthropic.com`
 - `console.anthropic.com`
 - `registry.npmjs.org`
-- `*.npmjs.org`
-- `*.npmjs.com`
 - `github.com`
-- `*.githubusercontent.com`
+- `raw.githubusercontent.com`
 
 If you use an Anthropic-compatible gateway, also add its host to `allow_out` or set `ANTHROPIC_BASE_URL`.
 
