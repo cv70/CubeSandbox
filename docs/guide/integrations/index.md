@@ -47,4 +47,5 @@ lang: en-US
 
 | Title | Author | Date | Tags |
 | --- | --- | --- | --- |
+| [Claude Code Integration Guide](./claude-code.md) | CubeSandbox contributors | 2026-07-02 | integration, claude-code, coding-agent |
 | _Add your article here_ | - | - | - |

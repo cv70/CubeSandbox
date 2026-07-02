@@ -47,4 +47,5 @@ lang: zh-CN
 
 | 标题 | 作者 | 日期 | 标签 |
 | --- | --- | --- | --- |
+| [Claude Code 集成指南](./claude-code.md) | CubeSandbox contributors | 2026-07-02 | integration, claude-code, coding-agent |
 | _在这里补充你的文章_ | - | - | - |
