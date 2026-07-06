@@ -48,4 +48,4 @@ lang: zh-CN
 | 标题 | 作者 | 日期 | 标签 |
 | --- | --- | --- | --- |
 | [Claude Code 集成指南](./claude-code.md) | CubeSandbox contributors | 2026-07-02 | integration, claude-code, coding-agent |
-| _在这里补充你的文章_ | - | - | - |
+| [Pi Agent 集成指南](./pi-agent.md) | chaojixinren | 2026-07-01 | integration, pi-agent, coding-agent, agent |

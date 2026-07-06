@@ -48,4 +48,4 @@ lang: en-US
 | Title | Author | Date | Tags |
 | --- | --- | --- | --- |
 | [Claude Code Integration Guide](./claude-code.md) | CubeSandbox contributors | 2026-07-02 | integration, claude-code, coding-agent |
-| _Add your article here_ | - | - | - |
+| [Pi Agent Integration Guide](./pi-agent.md) | chaojixinren | 2026-07-01 | integration, pi-agent, coding-agent, agent |

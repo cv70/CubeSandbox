@@ -29,10 +29,10 @@
 #   --push | PUSH=1            also `docker push` each image after building
 #   TAG=...                    shared image tag for ALL four images (default latest)
 #   REGISTRY=...               registry host (default cube-sandbox-image.tencentcloudcr.com)
-#   NAMESPACE=...              registry namespace (default demo for standalone use).
+#   NAMESPACE=...              registry namespace (default cluster for standalone use).
 #                              When pushing to the TCR created by this deployment,
 #                              create.sh passes the Terraform namespace
-#                              (`cubesandbox-demo`, from `terraform output
+#                              (`cubesandbox-cluster`, from `terraform output
 #                              tcr_namespace`); set NAMESPACE to match for manual runs.
 #   CUBE_API_IMAGE=...         fully-qualified ref overrides (per component);
 #   CUBE_MASTER_IMAGE=...      default to ${REGISTRY}/${NAMESPACE}/<name>:${TAG},
@@ -62,17 +62,17 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # (the extracted sandbox-package/) is two levels up.
 PKG_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
-REGISTRY="${REGISTRY:-cube-sandbox-image.tencentcloudcr.com}"
-NAMESPACE="${NAMESPACE:-demo}"
+REGISTRY="${REGISTRY:-cube-sandbox-cn.tencentcloudcr.com}"
+NAMESPACE="${NAMESPACE:-cube-sandbox}"
 # One shared, externally overridable tag for all four component images. Keep in
 # sync with terraform/tencentcloud (var.image_tag) so the default TKE deployment
 # consumes exactly what this script builds.
-TAG="${TAG:-latest}"
+TAG="${TAG:-v0.5.0}"
 
 CUBE_API_IMAGE="${CUBE_API_IMAGE:-${REGISTRY}/${NAMESPACE}/cube-api:${TAG}}"
-CUBE_MASTER_IMAGE="${CUBE_MASTER_IMAGE:-${REGISTRY}/${NAMESPACE}/cubemaster:${TAG}}"
-CUBE_PROXY_IMAGE="${CUBE_PROXY_IMAGE:-${REGISTRY}/${NAMESPACE}/cubeproxy:${TAG}}"
-CUBE_WEBUI_IMAGE="${CUBE_WEBUI_IMAGE:-${REGISTRY}/${NAMESPACE}/cube-webui:${TAG}}"
+CUBE_MASTER_IMAGE="${CUBE_MASTER_IMAGE:-${REGISTRY}/${NAMESPACE}/cube-master:${TAG}}"
+CUBE_PROXY_IMAGE="${CUBE_PROXY_IMAGE:-${REGISTRY}/${NAMESPACE}/cube-proxy:${TAG}}"
+CUBE_WEBUI_IMAGE="${CUBE_WEBUI_IMAGE:-${REGISTRY}/${NAMESPACE}/webui:${TAG}}"
 
 WEB_UI_UPSTREAM="${WEB_UI_UPSTREAM:-http://host.docker.internal:3000}"
 PUSH="${PUSH:-0}"

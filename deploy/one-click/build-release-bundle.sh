@@ -28,7 +28,7 @@ CUBE_PROXY_SOURCE_DIR="${ONE_CLICK_CUBE_PROXY_SOURCE_DIR:-${ROOT_DIR}/CubeProxy}
 CUBE_EGRESS_SOURCE_DIR="${ONE_CLICK_CUBE_EGRESS_SOURCE_DIR:-${ROOT_DIR}/CubeEgress}"
 WEB_SOURCE_DIR="${ONE_CLICK_WEB_SOURCE_DIR:-${ROOT_DIR}/web}"
 WEB_DIST_OVERRIDE="${ONE_CLICK_WEB_DIST_DIR:-}"
-MKCERT_BIN_ASSET="${ONE_CLICK_MKCERT_BIN:-${SCRIPT_DIR}/assets/bin/mkcert}"
+MKCERT_BIN_ASSET="${ONE_CLICK_MKCERT_BIN:-${SCRIPT_DIR}/assets/bin/mkcert-v1.4.4-linux-$(uname -m | sed -e 's/x86_64/amd64/' -e 's/aarch64/arm64/')}"
 CUBE_KERNEL_VMLINUX="${ONE_CLICK_CUBE_KERNEL_VMLINUX:-${RAW_ARTIFACTS_DIR}/vmlinux}"
 KERNEL_ARTIFACT_ZIP="${WORK_ROOT}/cube-kernel-scf.zip"
 
@@ -504,7 +504,7 @@ else
       require_cmd go
       (cd "${ROOT_DIR}/CubeProxy/sidecar" && \
         go mod download && \
-        CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+        CGO_ENABLED=0 GOOS=linux \
           go build -trimpath -tags 'netgo osusergo' -ldflags '-s -w' \
             -o "${CORE_BIN_DIR}/cube-proxy-sidecar" ./cmd/sidecar) >&2
       ;;
@@ -611,7 +611,7 @@ copy_dir_contents "${SCRIPT_DIR}/scripts/common" "${PACKAGE_ROOT}/scripts/common
 # it must ship in the release bundle so the install layout exposes
 # ${INSTALL_PREFIX}/scripts/cube-diag/collect-logs.sh.
 copy_dir_contents "${SCRIPT_DIR}/scripts/cube-diag" "${PACKAGE_ROOT}/scripts/cube-diag"
-# CubeEgress's host-side iptables/sysctl init script. Lives in the
+# CubeEgress's host-side iptables/route init script. Lives in the
 # CubeEgress repo subtree (CubeEgress/scripts/) — copy a single file
 # rather than the whole dir so we don't pull in the legacy
 # cube-proxy-net.service unit that conflicts with our deploy/one-click

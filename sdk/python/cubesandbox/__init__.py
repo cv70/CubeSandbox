@@ -6,6 +6,7 @@ from ._config import Config
 from ._models import Execution, Result, Logs, ExecutionError, OutputMessage, SnapshotInfo
 from ._exceptions import CubeSandboxError, SandboxNotFoundError, ApiError, TemplateNotFoundError, FilesystemNotFoundError, PartialWriteError
 from ._commands import CommandResult
+from ._pty import Pty, PtyHandle, PtyOutput, PtySize
 from ._template import Template, TemplateInfo, TemplateBuild
 from ._policy import Rule, Match, Action, Inject
 
@@ -25,6 +26,10 @@ __all__ = [
     "FilesystemNotFoundError",
     "PartialWriteError",
     "CommandResult",
+    "Pty",
+    "PtyHandle",
+    "PtyOutput",
+    "PtySize",
     "Template",
     "TemplateInfo",
     "TemplateBuild",
